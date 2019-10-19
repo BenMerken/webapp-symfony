@@ -72,6 +72,15 @@ the database. You can check whether it worked by querying your database:
 
 ![users query](ImagesReadme/database_query.PNG)
 
+## Security Controller
+
+For authentication purposes, we add a Symfony Controller class, called SecurityController:
+
+![Security Controller](ImagesReadme/security_controller.PNG) 
+
+After this, we change the index action on the SecurityController to login, and we change the index.html.twig
+template name in templates/security to login.html.twig.
+
 ## Roles for our users
 
 Coming soon!

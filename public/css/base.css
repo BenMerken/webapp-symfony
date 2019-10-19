@@ -1,0 +1,114 @@
+* {
+    margin: 0;
+    padding: 0;
+
+    font-family: '83 Heavy Extended', 'HelveticaNeueLTCom-HvEx', Arial, sans-serif;
+
+    color: #1c7430;
+}
+
+body, html {
+    height: 100vh;
+}
+
+.background {
+    height: 100vh;
+
+    background-image: url("../images/classroom.jpg");
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    top: 0;
+    bottom: 0;
+    z-index: 0;
+}
+
+.background-overlay {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    height: 100%;
+    width: 100%;
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.navbar {
+    display: flex;
+
+    background-color: black;
+}
+
+.navbar .home-button {
+    background-color: #0b2e13;
+}
+
+.navbar .login-button {
+    margin-left: auto;
+}
+
+.navbar a {
+    padding: 0.5rem;
+
+    text-decoration: none;
+    text-align: center;
+    font-weight: bolder;
+
+    color: white;
+}
+
+.navbar a:hover {
+    background-color: white;
+    color: black;
+}
+
+.navbar img {
+    height: 2.5rem;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.credits {
+    position: fixed;
+    bottom: 0;
+
+    width: 100%;
+
+    display: block;
+    padding: 0.5rem;
+
+    background-color: black;
+
+    font-size: 0.7rem;
+    color: white;
+}
+
+@media screen and (max-width: 450px){
+    .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+
+        flex-direction: column;
+    }
+
+    .navbar .login-button {
+        margin-left: 0;
+    }
+
+    .credits {
+        display: none;
+    }
+}

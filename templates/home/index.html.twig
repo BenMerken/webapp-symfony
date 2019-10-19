@@ -2,39 +2,8 @@
 
 {% block title %}{{ app_name }}{% endblock %}
 
-{% block body %}
-    <style>
-        .example-wrapper {
-            margin: 1em auto;
-            max-width: 800px;
-            width: 95%;
-            font: 18px/1.5 sans-serif;
-        }
-    </style>
 
-    <div class="example-wrapper">
-        <h1>Welcome to {{ app_name }}!</h1>
-        <p>Actions possible:</p>
-        <ul>
-            {% for action in actions %}
-                <li>
-                    <code>{{ action[0]|e }}</code>
-                    <ul>
-                        <li>{{ action[1]|e }}
-                            <ul>
-                                {% for param in action|slice(2) %}
-                                    <li>{{ param|e }}</li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                    </ul>
-                </li><br>
-            {% endfor %}
-        </ul>
-        <ul>
-            {% for i in range(0, 100) %}
-                <li>{{ i }}</li>
-            {% endfor %}
-        </ul>
-    </div>
+{% block content %}
+            <h1>Welcome to the PXL Asset Management tool!</h1>
+
 {% endblock %}
