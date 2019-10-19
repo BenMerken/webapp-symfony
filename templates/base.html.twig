@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+        <style>
+            ul {
+                list-style: none;
+            }
+
+            code {
+                background: #F5F5F5;
+                padding: 2px 6px;
+            }
+            .body-credits {
+                position: fixed;
+                background-color: #ccc;
+
+            }
+        </style>
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+    <footer class="body-credits">
+        Credits: Peter Janssen & Ben Merken @ Hogeschool PXL, 2019.
+    </footer>{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
+</html>
