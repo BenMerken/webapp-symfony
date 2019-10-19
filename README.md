@@ -35,12 +35,42 @@ Finally, we can migrate this initial migration using the following command:
 
 ![Doctrine initial migration](ImagesReadme/doctrine_initial_migration.PNG)
 
+he really neat thing about Symfony's security system is that it doesn't care at all about
+what your User class looks like. As long as it implements UserInterface, so, as long as it
+has these methods, you can do anything you want with it. This means you can add as nany custom
+fields to it as you wish, using the 'php bin/console make:entitiy' to update the User class'fields.
+Since these fields won't be necessary for what we're going to do in this project, we won't do that.
+
 ## The "User Provider"
 
 A "User Provider" is a class that helps with specific user features such as
-a "remember me" feature and impersonation.
+reloading the user data from the session, as well as other features such as 
+"remember me" feature and impersonation. If you've followed the steps above,
+there's no need to add anything, because Symfony added the User Provider annotation
+in the security.yaml file:
 
+![User Provider](ImagesReadme/user_provider.PNG)
 
+## Adding dummy users
+
+To create some dummy Users to our database we'll use the orm-fixture package for the Symfony
+MakerBundle, so add that package using the following command:
+
+![orm-fixture command](ImagesReadme/orm-fixture.PNG) 
+
+Now, we can generate a UserFixture class, which will generate the dummy Users for us. Enter the
+following command in your console: 
+
+![Dummy Users Command](ImagesReadme/generate_userFixture.PNG)
+
+In this newly generated UserFixture class we'll generate 10 new users, and persist them in the database:
+
+![UserFixture](ImagesReadme/UserFixture.PNG)
+
+Now, by using the 'php bin/console doctrine:fixtures:load' command, we persist our 10 generated Users into
+the database. You can check whether it worked by querying your database:
+
+![users query](ImagesReadme/database_query.PNG)
 
 ## Roles for our users
 
