@@ -81,6 +81,21 @@ For authentication purposes, we add a Symfony Controller class, called SecurityC
 After this, we change the index action on the SecurityController to login, and we change the index.html.twig
 template name in templates/security to login.html.twig.
 
+## Setup of security.yaml
+
+The security.yaml file is the beating heart of our authentication system:
+
+![security.yaml](ImagesReadme/security_yaml.PNG)
+
+Firstly, this file is configured to encrypt User passwords using the bcrypt algorithm. Next, 
+
+The firewall section consists of two subsections. The 'dev' part is not very important. Basically,
+it's only used to ensure the Symfony Profiler is not blocked while in a development environment. The
+'main' section, however, states anonymous users are allowed to access the resources, logging in is done
+through the login action on SecurityController, which is secured through a CSRF token, and a successful
+login is redirected to the HomeController's home action. Logging out will invoke the SecurityController's
+logout action, and redirect to the home action on the HomeController.
+
 ## Roles for our users
 
 Coming soon!

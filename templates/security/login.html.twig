@@ -11,18 +11,33 @@
 {% block content %}
     <h1>Please, sign in.</h1>
 
-    <form class="login-form" method="post">
-        <label for="email">Email:</label>
-        <input type="email" name="_email" id="email" value="{{ last_email }}">
+    <form class="login-form" action="{{ path('login') }}" method="post">
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" name="_username" id="email" value="{{ last_email }}">
+        </div>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password">
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="_password">
+        </div>
 
-        <label>
-            <input type="checkbox" value="remember-me">Remember me
-        </label>
+        <div class="form-group">
+            <label>
+                <input type="checkbox" value="remember-me">Remember me
+            </label>
+        </div>
 
         <button type="submit">Login</button>
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        <input type="hidden" name="_target_path" value="{{ app.request.get('redirect_to') }}">
     </form>
+
+    {% if error %}
+        <div class="alert">
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
 
 {% endblock %}

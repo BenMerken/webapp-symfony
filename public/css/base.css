@@ -95,6 +95,10 @@ body, html {
     color: white;
 }
 
+.alert {
+    color: #f00;
+}
+
 @media screen and (max-width: 450px){
     .navbar {
         position: fixed;

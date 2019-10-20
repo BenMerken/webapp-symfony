@@ -1,11 +1,9 @@
 security:
     encoders:
         App\Entity\User:
-            algorithm: auto
+            algorithm: bcrypt
 
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
             entity:
                 class: App\Entity\User
@@ -16,15 +14,21 @@ security:
             security: false
         main:
             anonymous: true
+            pattern: ^/
 
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#firewalls-authentication
+            form_login:
+                check_path: login
+                login_path: login
+                csrf_token_generator: security.csrf.token_manager
+                default_target_path: home
+                failure_path: login
 
-            # https://symfony.com/doc/current/security/impersonating_user.html
+            logout:
+                path: logout
+                target: home
+
             # switch_user: true
 
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
