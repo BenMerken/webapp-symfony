@@ -87,8 +87,10 @@ The security.yaml file is the beating heart of our authentication system:
 
 ![security.yaml](ImagesReadme/security_yaml.PNG)
 
-Firstly, this file is configured to encrypt User passwords using the bcrypt algorithm. Next, 
-
+Firstly, this file is configured to encrypt User passwords using the most secure algorithm available at the time.
+Next, the User provider is listed, a class that helps with a few things, like reloading the User data from the session
+and some optional features, like "remember me" and impersonation.
+ 
 The firewall section consists of two subsections. The 'dev' part is not very important. Basically,
 it's only used to ensure the Symfony Profiler is not blocked while in a development environment. The
 'main' section, however, states anonymous users are allowed to access the resources, logging in is done
