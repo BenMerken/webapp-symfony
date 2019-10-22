@@ -34,11 +34,8 @@ class UserFixture extends Fixture
                 $user,
                 "secret"
             ));
-            $userRoles = $user->getRoles();
-            $userRoles[] = $userRole;
-
+            $userRoles = array($userRole);
             $user->setRoles($userRoles) ;
-
             $manager->persist($user);
         }
 

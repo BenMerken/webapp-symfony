@@ -100,7 +100,29 @@ logout action, and redirect to the home action on the HomeController.
 
 ## Roles for our users
 
-Coming soon!
+Since we to differentiate between anonymous users on one hand, and administrators, moderators and custodians on the
+other, we have to add roles to the registered Users. We can do this, by setting the role using the setRoles function on
+the User object. Let's use the load function on the UserFixture class to load some administrators, moderators and
+custodians into the Users database:
+
+![UserFixture load](ImagesReadme/userFixture_load_users.PNG)
+
+Now, when we select all Users in the user table of the database, we can see the roles for all registered users:
+
+![Users in database](ImagesReadme/users_in_database.PNG)
+
+One thing to keep in mind regarding user roles is that every registered user by default has the role ROLE_USER, which
+isn't maintained in the database but rather added to the roles array on a User object every time the getRoles function
+on a User object is called:
+
+![User getRoles](ImagesReadme/user_getRoles.PNG)
+
+## Authorization
+
+To make sure only admins can access admin resources, only mods can access mod resources and custodians can only access
+custodian resources, you can add an access control list, or ACL, at the end of your security.yaml file:
+
+![Access control list](ImagesReadme/access_control.PNG)
 
 ## Credits
 Peter Janssen & Ben Merken @ Hogeschool PXL, 2019.

@@ -1,34 +1,40 @@
 security:
-    encoders:
-        App\Entity\User:
-            algorithm: auto
+  encoders:
+    App\Entity\User:
+      algorithm: auto
 
-    providers:
-        app_user_provider:
-            entity:
-                class: App\Entity\User
-                property: email
-    firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-        main:
-            anonymous: true
-            pattern: ^/
+  providers:
+    app_user_provider:
+      entity:
+        class: App\Entity\User
+        property: email
+  firewalls:
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+    main:
+      anonymous: true
+      pattern: ^/
 
-            form_login:
-                check_path: login
-                login_path: login
-                csrf_token_generator: security.csrf.token_manager
-                default_target_path: home
-                failure_path: login
+      form_login:
+        check_path: login
+        login_path: login
+        csrf_token_generator: security.csrf.token_manager
+        default_target_path: home
+        failure_path: login
 
-            logout:
-                path: logout
-                target: home
+      logout:
+        path: logout
+        target: home
 
-            # switch_user: true
+      guard:
+        authenticators:
+          - App\Security\LoginFormAuthenticator
 
-    access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+      # switch_user: true
+
+  access_control:
+   - { path: ^/admin, roles: ROLE_ADMIN }
+   - { path: ^/moderator, roles: ROLE_MOD }
+   - { path: ^/custodian, roles: ROLE_CUSTODIAN }
+   - { path: ^/profile, roles: ROLE_USER }
