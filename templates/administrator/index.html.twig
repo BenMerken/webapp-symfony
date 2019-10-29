@@ -3,5 +3,47 @@
 {% block title %}Administrator Dashboard{% endblock %}
 
 {% block content %}
-
+    <h1>List of Users</h1>
+    <table>
+        <caption>Moderators</caption>
+        <tr>
+            <th>Id</th>
+            <th>Email</th>
+        </tr>
+        {% for mod in moderators %}
+            <tr>
+                <td>{{ mod.id|e }}</td>
+                <td>{{ mod.email|e }}</td>
+                <td>
+                    <form action="{{ url('delete_user') }}">
+                        <input type="submit" value="Delete user">
+                        <input type="hidden" name="userId" value="{{ mod.id }}">
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <table>
+        <caption>Custodians</caption>
+        <tr>
+            <th>Id</th>
+            <th>Email</th>
+        </tr>
+        {% for cus in custodians %}
+            <tr>
+                <td>{{ cus.id|e }}</td>
+                <td>{{ cus.email|e }}</td>
+                <td>
+                    <form action="{{ url('delete_user') }}">
+                        <input type="submit" value="Delete user">
+                        <input type="hidden" name="userId" value="{{ cus.id }}">
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <button>Create new user</button>
+    {% if userId %}
+        User with id {{ userId }} deleted.
+    {% endif %}
 {% endblock %}
