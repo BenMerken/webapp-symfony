@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use App\Form\RegistrationFormType;
+use App\Security\LoginFormAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
 class AdministratorController extends AbstractController
 {
@@ -22,7 +25,55 @@ class AdministratorController extends AbstractController
         return $this->render('administrator/index.html.twig', [
             'moderators' => $moderators,
             'custodians' => $custodians,
-            'userId' => $request->request->get('userId'),
+            'created_user' => $request->query->get('created_user'),
         ]);
+    }
+
+    /**
+     * @Route("/admin/register", methods={"GET", "POST"}, name="register")
+     */
+    public function register(Request $request,
+                             UserPasswordEncoderInterface $passwordEncoder,
+                             GuardAuthenticatorHandler $guardHandler,
+                             LoginFormAuthenticator $authenticator)
+    {
+        $user = new User();
+        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword(
+                $passwordEncoder->encodePassword(
+                    $user,
+                    $form->get('plaintextPassword')->getData()
+                )
+            );
+            $user->setRoles($form->get('roles')->getData());
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('admin_dashboard', ['created_user' => $user->getEmail()]);
+        }
+
+        return $this->render('registration/register.html.twig', [
+            'registrationForm' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/admin/delete/{userId}", name="delete_user")
+     */
+    public function deleteUser($userId)
+    {
+        $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
+        if ($user) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($user);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('admin_dashboard');
     }
 }

@@ -15,10 +15,9 @@
                 <td>{{ mod.id|e }}</td>
                 <td>{{ mod.email|e }}</td>
                 <td>
-                    <form action="{{ url('login') }}">
-                        <input type="submit" value="Delete user">
-                        <input type="hidden" name="userId" value="{{ mod.id }}">
-                    </form>
+                    <a href="{{ url('delete_user', {'userId': mod.id}) }}">
+                        <button>Delete user</button>
+                    </a>
                 </td>
             </tr>
         {% endfor %}
@@ -34,16 +33,19 @@
                 <td>{{ cus.id|e }}</td>
                 <td>{{ cus.email|e }}</td>
                 <td>
-                    <form action="{{ url('login') }}">
-                        <input type="submit" value="Delete user">
-                        <input type="hidden" name="userId" value="{{ cus.id }}">
-                    </form>
+                    <a href="{{ url('delete_user', {'userId': cus.id}) }}">
+                        <button>Delete user</button>
+                    </a>
                 </td>
             </tr>
         {% endfor %}
     </table>
-    <a href="{{ url('register') }}"><button>Create new user</button></a>
-    {% if userId %}
-        User with id {{ userId }} deleted.
-    {% endif %}
+    <a href="{{ url('register') }}">
+        <button>Create new user</button>
+    </a>
+    <div>
+        {% if created_user %}
+            User {{ created_user }} created.
+        {% endif %}
+    </div>
 {% endblock %}
