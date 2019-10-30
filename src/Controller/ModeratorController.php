@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ModeratorController extends AbstractController
 {
     /**
-     * @Route("/moderator", name="moderator_dashboard")
+     * @Route("/moderator", methods={"GET"}, name="moderator_dashboard")
      */
     public function index()
     {

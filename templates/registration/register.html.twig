@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register new user{% endblock %}
+
+{% block content %}
+    <h1>Register new user</h1>
+
+    {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.plaintextPassword) }}
+        {{ form_row(registrationForm.roles) }}
+
+        <button class="btn">Register new user</button>
+    {{ form_end(registrationForm) }}
+    <a href="{{ url('admin_dashboard') }}"><button>Back</button></a>
+{% endblock %}

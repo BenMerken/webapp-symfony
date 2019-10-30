@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CustodianController extends AbstractController
 {
     /**
-     * @Route("/custodian", name="custodian_dashboard")
+     * @Route("/custodian", methods={"GET"}, name="custodian_dashboard")
      */
     public function index()
     {
