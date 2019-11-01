@@ -12,11 +12,16 @@
         </tr>
         {% for ticket in tickets %}
             <tr>
-                <td>{{ ticket.numberOfVotes }}</td>
-                <td>{{ ticket.description }}</td>
+                <td>{{ ticket.numberOfVotes|e }}</td>
+                <td>{{ ticket.description|e }}</td>
                 <td>
                     <a href="{{ url('delete_ticket', {'ticketId': ticket.id}) }}">
                         <button>Delete ticket</button>
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ url('upvote_ticket', {'ticketId': ticket.id}) }}">
+                        <button>Upvote ticket</button>
                     </a>
                 </td>
             </tr>
