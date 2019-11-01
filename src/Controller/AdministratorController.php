@@ -14,7 +14,7 @@ use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 class AdministratorController extends AbstractController
 {
     /**
-     * @Route("/admin", methods={"GET"}, name="admin_dashboard")
+     * @Route("/admin", name="admin_dashboard")
      */
     public function index(Request $request)
     {
@@ -30,7 +30,7 @@ class AdministratorController extends AbstractController
     }
 
     /**
-     * @Route("/admin/register", methods={"GET", "POST"}, name="register")
+     * @Route("/admin/register", name="register")
      */
     public function register(Request $request,
                              UserPasswordEncoderInterface $passwordEncoder,
@@ -57,7 +57,7 @@ class AdministratorController extends AbstractController
             return $this->redirectToRoute('admin_dashboard', ['created_user' => $user->getEmail()]);
         }
 
-        return $this->render('registration/register.html.twig', [
+        return $this->render('administrator/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }

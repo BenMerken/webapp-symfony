@@ -1,7 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CustodianController!{% endblock %}
+{% block title %}Custodian Dashboard{% endblock %}
 
 {% block content %}
-
+    <h1>List of tickets</h1>
+    <table>
+        <caption>Tickets</caption>
+        <tr>
+            <th>Number Of Votes</th>
+            <th>Description</th>
+        </tr>
+        {% for ticket in tickets %}
+            <tr>
+                <td>{{ ticket.numberOfVotes }}</td>
+                <td>{{ ticket.description }}</td>
+                <td>
+                    <a href="{{ url('delete_ticket', {'ticketId': ticket.id}) }}">
+                        <button>Delete ticket</button>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock %}
