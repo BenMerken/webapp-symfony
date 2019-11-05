@@ -10,8 +10,6 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RegistrationFormType extends AbstractType
 {
@@ -19,32 +17,21 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class)
-            ->add('plaintextPassword', PasswordType::class, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
-                    new Length([
-                        'min' => 8,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        'max' => 4096,
-                    ]),
-                ],
-            ])
+            ->add('plaintextPassword', PasswordType::class)
             ->add('roles', ChoiceType::class, [
-                'choices' => [
-                    'Moderator' => 'ROLE_MOD',
-                    'Custodian' => 'ROLE_CUSTODIAN'
-                ],
-            ])
-            ->get('roles')->addModelTransformer(new CallbackTransformer(
-                function ($rolesAsArray) {
-                    return implode(', ', $rolesAsArray);
-                },
-                function ($rolesAsString) {
-                    return explode(', ', $rolesAsString);
-                }
-            ));
+        'choices' => [
+            'Moderator' => 'ROLE_MOD',
+            'Custodian' => 'ROLE_CUSTODIAN'
+        ],
+    ])
+        ->get('roles')->addModelTransformer(new CallbackTransformer(
+            function ($rolesAsArray) {
+                return implode(', ', $rolesAsArray);
+            },
+            function ($rolesAsString) {
+                return explode(', ', $rolesAsString);
+            }
+        ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

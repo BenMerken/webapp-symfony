@@ -16,6 +16,13 @@
                 <a href="https://www.pxl.be"><img src="{{ asset('images/pxl-logo.png') }}" alt="PXL logo"></a>
                 <a class="home-button" href="{{ url('home') }}">Home</a>
                 {% if app.user %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="login-button" href="{{ url('admin_dashboard') }}">Admin dashboard</a>
+                    {% elseif is_granted('ROLE_MOD') %}
+                        <a class="login-button" href="{{ url('moderator_dashboard') }}">Mod dashboard</a>
+                    {% elseif is_granted('ROLE_CUSTODIAN') %}
+                        <a class="login-button" href="{{ url('custodian_dashboard') }}">Custodian dashboard</a>
+                    {% endif %}
                     <a class="login-button" href="{{ url('login') }}"> Profile</a>
                     <a href="{{ url('logout') }}">Logout</a>
                 {% else %}

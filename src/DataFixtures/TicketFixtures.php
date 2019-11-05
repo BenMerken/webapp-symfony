@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Asset;
 use App\Entity\Ticket;
+use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -15,10 +16,16 @@ class TicketFixtures extends Fixture implements DependentFixtureInterface
         $assetRepository = $manager->getRepository(Asset::class);
         $numberOfVotes = 100;
         $counter = 1;
-        for ($i = 1; $i <= sizeof($assetRepository->findAll()); $i++) {
-            $this->loadTicket($manager, $assetRepository->find($i), $numberOfVotes, "Ticket no. $counter");
+        $assets = $assetRepository->findAll();
+
+        for ($i = 0; $i < sizeof($assets); $i++) {
+            $this->loadTicket($manager, $assets[$i], $numberOfVotes, "Ticket for ". $assets[$i]->getName());
+            $numberOfVotes = $numberOfVotes + 100 * $counter;
+            $this->loadTicket($manager, $assets[$i], $numberOfVotes, "Ticket for ". $assets[$i]->getName());
+            if ($counter === sizeof($assets)) {
+                $this->loadTicket($manager, $assets[$i], $numberOfVotes, "Ticket for ". $assets[$i]->getName());
+            }
             $counter++;
-            $numberOfVotes = $numberOfVotes + 100 * $i;
         }
     }
 
@@ -28,6 +35,7 @@ class TicketFixtures extends Fixture implements DependentFixtureInterface
         $ticket->setAsset($asset);
         $ticket->setNumberOfVotes($numberOfVotes);
         $ticket->setDescription($description);
+        $ticket->setCreationDate(new DateTimeImmutable());
 
         $manager->persist($ticket);
         $manager->flush();

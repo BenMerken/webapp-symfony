@@ -1,13 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ app_name }}{% endblock %}
+{% block title %}PXL's Asset Management Tool{% endblock %}
 
 
 {% block content %}
-    {% if username %}
-        <h1>Welcome {{ username }}!</h1>
-        {% else %}
-            <h1>Welcome to the PXL Asset Management tool!</h1>
+    {% if app.user %}
+        <h1>Welcome {{ app.user.username }}!</h1>
+        <p>Please feel free to register a ticket of complaint for one of our assets!</p>
+    {% else %}
+        <h1>Welcome to the PXL Asset Management tool!</h1>
+        <p>Here, you can register a ticket of complaint for one of our assets. Please note, that as an unregisterd user,
+            you are only allowed to register three tickets per day for every asset, that is, for all unregistered users
+            combined. Assets for there have already been registered three tickets today will be greyed out.</p>
     {% endif %}
 
 {% endblock %}

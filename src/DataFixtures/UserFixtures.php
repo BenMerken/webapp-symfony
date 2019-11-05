@@ -20,22 +20,22 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        $this->loadUsers($manager, 1, 3, 'ROLE_ADMIN');
-        $this->loadUsers($manager, 4, 6, 'ROLE_MOD');
-        $this->loadUsers($manager, 7, 9, 'ROLE_CUSTODIAN');
+        $this->loadUsers($manager, 'admin', 'ROLE_ADMIN');
+        $this->loadUsers($manager, 'mod', 'ROLE_MOD');
+        $this->loadUsers($manager, 'custodian', 'ROLE_CUSTODIAN');
     }
 
-    private function loadUsers(ObjectManager $manager, $min, $max, $userRole)
+    private function loadUsers(ObjectManager $manager, $name, $userRole)
     {
-        for ($i = $min; $i <= $max; $i++) {
+        for ($i = 1; $i <= 3; $i++) {
             $user = new User();
-            $user->setEmail("lector$i@pxl.be");
+            $user->setEmail("$name$i@pxl.be");
             $user->setPassword($this->passwordEncoder->encodePassword(
                 $user,
                 "secret"
             ));
             $userRoles = array($userRole);
-            $user->setRoles($userRoles) ;
+            $user->setRoles($userRoles);
             $manager->persist($user);
         }
 

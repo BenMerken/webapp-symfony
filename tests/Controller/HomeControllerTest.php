@@ -12,15 +12,15 @@ class HomeControllerTest extends WebTestCase
     {
         return [
             [
-                ['PHP_AUTH_USER' => 'lector1@pxl.be',
+                ['PHP_AUTH_USER' => 'admin1@pxl.be',
                     'PHP_AUTH_PW' => 'secret']
             ],
             [
-                ['PHP_AUTH_USER' => 'lector4@pxl.be',
+                ['PHP_AUTH_USER' => 'mod1@pxl.be',
                     'PHP_AUTH_PW' => 'secret']
             ],
             [
-                ['PHP_AUTH_USER' => 'lector7@pxl.be',
+                ['PHP_AUTH_USER' => 'custodian1@pxl.be',
                     'PHP_AUTH_PW' => 'secret']
             ],
         ];

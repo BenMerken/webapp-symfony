@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20191031124140 extends AbstractMigration
+final class Version20191104185805 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -24,7 +24,7 @@ final class Version20191031124140 extends AbstractMigration
 
         $this->addSql('CREATE TABLE asset (id INT AUTO_INCREMENT NOT NULL, room_id INT NOT NULL, name VARCHAR(50) NOT NULL, INDEX IDX_2AF5A5C54177093 (room_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE room (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(4) NOT NULL, happiness_score INT DEFAULT 0 NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE ticket (id INT AUTO_INCREMENT NOT NULL, asset_id INT NOT NULL, number_of_votes INT NOT NULL, description VARCHAR(255) NOT NULL, INDEX IDX_97A0ADA35DA1941 (asset_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE ticket (id INT AUTO_INCREMENT NOT NULL, asset_id INT NOT NULL, number_of_votes INT NOT NULL, description VARCHAR(255) NOT NULL, creation_date DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', INDEX IDX_97A0ADA35DA1941 (asset_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_8D93D649E7927C74 (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('ALTER TABLE asset ADD CONSTRAINT FK_2AF5A5C54177093 FOREIGN KEY (room_id) REFERENCES room (id)');
         $this->addSql('ALTER TABLE ticket ADD CONSTRAINT FK_97A0ADA35DA1941 FOREIGN KEY (asset_id) REFERENCES asset (id)');

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,12 +18,6 @@ class Ticket
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Asset")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $asset;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $numberOfVotes;
@@ -32,21 +27,20 @@ class Ticket
      */
     private $description;
 
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $creationDate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Asset", inversedBy="tickets")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $asset;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getAsset(): ?Asset
-    {
-        return $this->asset;
-    }
-
-    public function setAsset(?Asset $asset): self
-    {
-        $this->asset = $asset;
-
-        return $this;
     }
 
     public function getNumberOfVotes(): ?int
@@ -69,6 +63,30 @@ class Ticket
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCreationDate(): ?DateTimeImmutable
+    {
+        return $this->creationDate;
+    }
+
+    public function setCreationDate(DateTimeImmutable $creationDate): self
+    {
+        $this->creationDate = $creationDate;
+
+        return $this;
+    }
+
+    public function getAsset(): ?Asset
+    {
+        return $this->asset;
+    }
+
+    public function setAsset(?Asset $asset): self
+    {
+        $this->asset = $asset;
 
         return $this;
     }

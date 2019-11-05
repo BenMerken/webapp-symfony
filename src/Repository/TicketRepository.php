@@ -20,4 +20,16 @@ class TicketRepository extends ServiceEntityRepository
 
         return $queryBuilder->getQuery()->execute();
     }
+
+    public function getTicketsTodayByAssetId($assetId)
+    {
+        $queryBuilder = $this->createQueryBuilder('ticket');
+        $queryBuilder
+            ->andWhere('ticket.creationDate LIKE :date')
+            ->andWhere('ticket.assetId = :assetId')
+            ->setParameter('date', date('Y-m-d', time()))
+            ->setParameter('assetId', $assetId);
+
+        return $queryBuilder->getQuery()->execute();
+    }
 }
