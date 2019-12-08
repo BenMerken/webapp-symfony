@@ -23,18 +23,21 @@ class TicketRepositoryTest extends KernelTestCase
             ->getManager();
     }
 
+    public function tearDown()
+    {
+        $this->entityManager->close();
+        $this->entityManager = null;
+    }
+
     public function testFindAllDescendingByNumberOfVotes()
     {
         $tickets = $this->entityManager
             ->getRepository(Ticket::class)
             ->findAllDescendingByNumberOfVotes();
 
-        $this->assertCount(8, $tickets);
-    }
-
-    public function tearDown()
-    {
-        $this->entityManager->close();
-        $this->entityManager = null;
+        $this->assertCount(17, $tickets);
+        for ($i = 0; $i < sizeof($tickets) - 1; $i++) {
+            $this->assertGreaterThanOrEqual($tickets[$i + 1]->getNumberOfVotes(), $tickets[$i]->getNumberOfVotes());
+        }
     }
 }

@@ -14,4 +14,8 @@
             combined. Assets for there have already been registered three tickets today will be greyed out.</p>
     {% endif %}
 
+    {% for asset in assets %}
+        <p>{{ asset.id }}. {{ asset.name }}</p>
+    {% endfor %}
 {% endblock %}
+

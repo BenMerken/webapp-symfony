@@ -21,14 +21,25 @@ class TicketRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery()->execute();
     }
 
-    public function getTicketsTodayByAssetId($assetId)
+    public function findTicketsTodayByAssetId($assetId)
     {
         $queryBuilder = $this->createQueryBuilder('ticket');
         $queryBuilder
             ->andWhere('ticket.creationDate LIKE :date')
-            ->andWhere('ticket.assetId = :assetId')
-            ->setParameter('date', date('Y-m-d', time()))
+            ->andWhere('IDENTITY(ticket.asset) = :assetId')
+            ->setParameter('date', '%'.date('Y-m-d', time()). '%')
             ->setParameter('assetId', $assetId);
+
+        return $queryBuilder->getQuery()->execute();
+    }
+
+    public function findTicketCountGroupedByAssetId()
+    {
+
+        $queryBuilder = $this->createQueryBuilder('ticket');
+        $queryBuilder
+            ->select('COUNT(ticket)')
+            ->groupBy('ticket.assetId');
 
         return $queryBuilder->getQuery()->execute();
     }
