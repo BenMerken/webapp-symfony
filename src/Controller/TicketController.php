@@ -8,11 +8,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class TicketController extends AbstractController
 {
     /**
-     * @Route("/ticket", name="ticket-form")
+     * @Route("/ticket", name="ticket_form")
      */
     public function ticketForm()
     {
-        return $this->render('ticket/ticket-form.html.twig', [
+        return $this->render('ticket/ticket_form.html.twig', [
         ]);
     }
 }

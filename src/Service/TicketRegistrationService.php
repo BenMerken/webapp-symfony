@@ -29,7 +29,7 @@ class TicketRegistrationService
 
         $assetWithLimitedTickets = [];
         foreach ($assetsInDatabase as $assetInDatabase) {
-            if ($this->ticketCountForAssetIdIsLessThanGivenValue($assetInDatabase->getId(), $this->upperBoundary)) {
+            if ($this->ticketCountForAssetIdIsLessThanGivenValueToday($assetInDatabase->getId(), $this->upperBoundary)) {
                 $assetWithLimitedTickets[] = $assetInDatabase;
             }
         }
@@ -37,8 +37,8 @@ class TicketRegistrationService
         return $assetWithLimitedTickets;
     }
 
-    private function ticketCountForAssetIdIsLessThanGivenValue($assetId, $upperBoundary)
+    private function ticketCountForAssetIdIsLessThanGivenValueToday($assetId, $upperBoundary)
     {
-        return sizeof($this->ticketRepository->findBy(['asset' => $assetId])) < $upperBoundary;
+        return sizeof($this->ticketRepository->findTicketsTodayByAssetId($assetId)) < $upperBoundary;
     }
 }

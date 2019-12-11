@@ -32,15 +32,4 @@ class TicketRepository extends ServiceEntityRepository
 
         return $queryBuilder->getQuery()->execute();
     }
-
-    public function findTicketCountGroupedByAssetId()
-    {
-
-        $queryBuilder = $this->createQueryBuilder('ticket');
-        $queryBuilder
-            ->select('COUNT(ticket)')
-            ->groupBy('ticket.assetId');
-
-        return $queryBuilder->getQuery()->execute();
-    }
 }
