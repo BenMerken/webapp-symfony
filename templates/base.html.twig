@@ -23,7 +23,6 @@
                     {% elseif is_granted('ROLE_CUSTODIAN') %}
                         <a class="login-button" href="{{ url('custodian_dashboard') }}">Custodian dashboard</a>
                     {% endif %}
-                    <a class="login-button" href="{{ url('login') }}"> Profile</a>
                     <a href="{{ url('logout') }}">Logout</a>
                 {% else %}
                     <a class="login-button" href="{{ url('login') }}">Login</a>

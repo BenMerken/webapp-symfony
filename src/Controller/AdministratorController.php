@@ -4,12 +4,10 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
-use App\Security\LoginFormAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
 class AdministratorController extends AbstractController
 {
@@ -32,10 +30,7 @@ class AdministratorController extends AbstractController
     /**
      * @Route("/admin/register", name="register")
      */
-    public function register(Request $request,
-                             UserPasswordEncoderInterface $passwordEncoder,
-                             GuardAuthenticatorHandler $guardHandler,
-                             LoginFormAuthenticator $authenticator)
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
