@@ -11,11 +11,28 @@
         <h1>Welcome to the PXL Asset Management tool!</h1>
         <p>Here, you can register a ticket of complaint for one of our assets. Please note, that as an unregisterd user,
             you are only allowed to register three tickets per day for every asset, that is, for all unregistered users
-            combined. Assets for there have already been registered three tickets today will be greyed out.</p>
+            combined. Assets for which there have already been issued three tickets today will not be displayed.</p>
     {% endif %}
 
-    {% for asset in assets %}
-        <p>{{ asset.id }}. {{ asset.name }}</p>
-    {% endfor %}
+    {% set asset_counter = 1 %}
+    <table>
+        <caption>Please, choose an asset to register a ticket for.</caption>
+        <tr>
+            <th></th>
+            <th>Asset</th>
+        </tr>
+        {% for asset in assets %}
+            <tr>
+                <td>{{ asset_counter }}.</td>
+                <td>{{ asset.name }}</td>
+                <td>
+                    <a href="{{ url('register_ticket', {'assetId': asset.id}) }}">
+                        <button>Register ticket</button>
+                    </a>
+                </td>
+            </tr>
+            {% set asset_counter = asset_counter + 1 %}
+        {% endfor %}
+    </table>
 {% endblock %}
 

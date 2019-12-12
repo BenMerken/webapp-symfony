@@ -8,9 +8,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class TicketController extends AbstractController
 {
     /**
-     * @Route("/ticket", name="ticket_form")
+     * @Route("/register_ticket", name="register_ticket")
      */
-    public function ticketForm()
+    public function registerTicket()
     {
         return $this->render('ticket/ticket_form.html.twig', [
         ]);

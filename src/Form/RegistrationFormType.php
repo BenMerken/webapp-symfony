@@ -19,19 +19,19 @@ class RegistrationFormType extends AbstractType
             ->add('email', EmailType::class)
             ->add('plaintextPassword', PasswordType::class)
             ->add('roles', ChoiceType::class, [
-        'choices' => [
-            'Moderator' => 'ROLE_MOD',
-            'Custodian' => 'ROLE_CUSTODIAN'
-        ],
-    ])
-        ->get('roles')->addModelTransformer(new CallbackTransformer(
-            function ($rolesAsArray) {
-                return implode(', ', $rolesAsArray);
-            },
-            function ($rolesAsString) {
-                return explode(', ', $rolesAsString);
-            }
-        ));
+                'choices' => [
+                    'Moderator' => 'ROLE_MOD',
+                    'Custodian' => 'ROLE_CUSTODIAN'
+                ],
+            ])
+            ->get('roles')->addModelTransformer(new CallbackTransformer(
+                function ($rolesAsArray) {
+                    return implode(', ', $rolesAsArray);
+                },
+                function ($rolesAsString) {
+                    return explode(', ', $rolesAsString);
+                }
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
