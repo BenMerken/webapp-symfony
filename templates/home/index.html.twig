@@ -5,29 +5,35 @@
 
 {% block content %}
     {% if app.user %}
-        <h1>Welcome {{ app.user.username }}!</h1>
-        <p>Please feel free to register a ticket of complaint for one of our assets!</p>
+        <h1 class="font-weight-light">Welcome {{ app.user.username }}!</h1>
+        <p class="lead">Please feel free to register a ticket of complaint for one of our assets!</p>
     {% else %}
-        <h1>Welcome to the PXL Asset Management tool!</h1>
-        <p>Here, you can register a ticket of complaint for one of our assets. Please note, that as an unregisterd user,
+        <h1 class="font-weight-light">Welcome to the PXL Asset Management tool!</h1>
+        <p class="lead">Here, you can register a ticket of complaint for one of our assets. Please note, that as an
+            unregisterd user,
             you are only allowed to register three tickets per day for every asset, that is, for all unregistered users
             combined. Assets for which there have already been issued three tickets today will not be displayed.</p>
     {% endif %}
 
     {% set asset_counter = 1 %}
-    <table>
+    <table class="table">
         <caption>Please, choose an asset to register a ticket for.</caption>
+        <thead>
         <tr>
-            <th></th>
+            <th>#</th>
             <th>Asset</th>
+            <th></th>
         </tr>
+        </thead>
         {% for asset in assets %}
             <tr>
-                <td>{{ asset_counter }}.</td>
+                <th scope="row">{{ asset_counter }}.</th>
                 <td>{{ asset.name }}</td>
                 <td>
                     <a href="{{ url('register_ticket', {'assetId': asset.id}) }}">
-                        <button>Register ticket</button>
+                        <button class="btn btn-success">
+                            Register ticket
+                        </button>
                     </a>
                 </td>
             </tr>
