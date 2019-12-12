@@ -1,0 +1,28 @@
+{
+  "name": "wp2-groep-1",
+  "version": "1.0.0",
+  "description": "WP2 Web & Mobile 2019",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "bootstrap": "^4.4.1",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.16.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webpxl/wp2-groep-1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/webpxl/wp2-groep-1/issues"
+  },
+  "homepage": "https://github.com/webpxl/wp2-groep-1#readme"
+}
