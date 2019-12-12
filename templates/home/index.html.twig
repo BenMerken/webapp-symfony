@@ -20,18 +20,19 @@
         <caption>Please, choose an asset to register a ticket for.</caption>
         <thead>
         <tr>
-            <th>#</th>
-            <th>Asset</th>
-            <th></th>
+            <th scope="col">#</th>
+            <th scope="col">Asset</th>
+            <th scope="col"></th>
         </tr>
         </thead>
+        <tbody>
         {% for asset in assets %}
             <tr>
                 <th scope="row">{{ asset_counter }}.</th>
                 <td>{{ asset.name }}</td>
                 <td>
                     <a href="{{ url('register_ticket', {'assetId': asset.id}) }}">
-                        <button class="btn btn-success">
+                        <button class="btn btn-outline-success">
                             Register ticket
                         </button>
                     </a>
@@ -39,6 +40,7 @@
             </tr>
             {% set asset_counter = asset_counter + 1 %}
         {% endfor %}
+        </tbody>
     </table>
 {% endblock %}
 

@@ -3,8 +3,8 @@
 {% block title %}Custodian Dashboard{% endblock %}
 
 {% block content %}
-    <h1>List of tickets</h1>
-    <table>
+    <h1 class="font-weight-light">List of tickets</h1>
+    <table class="table">
         <caption>Tickets</caption>
         <tr>
             <th>Number Of Votes</th>
@@ -16,12 +16,12 @@
                 <td>{{ ticket.description|e }}</td>
                 <td>
                     <a href="{{ url('delete_ticket', {'ticketId': ticket.id}) }}">
-                        <button>Delete ticket</button>
+                        <button class="btn btn-outline-danger">Delete ticket</button>
                     </a>
                 </td>
                 <td>
                     <a href="{{ url('upvote_ticket', {'ticketId': ticket.id}) }}">
-                        <button>Upvote ticket</button>
+                        <button class="btn btn-outline-dark">Upvote ticket</button>
                     </a>
                 </td>
             </tr>

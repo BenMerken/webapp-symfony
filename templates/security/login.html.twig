@@ -3,8 +3,7 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-    <div class="login-form">
-        <h1>Please, sign in.</h1>
+        <h1 class="font-weight-light">Please, sign in.</h1>
 
         <form action="{{ path('login') }}" method="post">
             <div class="form-group">
@@ -17,12 +16,11 @@
                 <input class="form-control" type="password" id="password" name="_password">
             </div>
 
-            <button class="btn btn-success" type="submit">Login</button>
+            <button class="btn btn-outline-success" type="submit">Login</button>
 
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             <input type="hidden" name="_target_path" value="{{ app.request.get('redirect_to') }}">
         </form>
-    </div>
 
     {% if error %}
         <div class="alert">

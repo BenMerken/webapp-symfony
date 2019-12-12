@@ -3,14 +3,26 @@
 {% block title %}Register new user{% endblock %}
 
 {% block content %}
-    <h1>Register new user</h1>
+    <h1 class="font-weight-light">Register new user</h1>
 
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plaintextPassword) }}
-        {{ form_row(registrationForm.roles) }}
+        <div class="form-group">
+            {{ form_label(registrationForm.email) }}
+            {{ form_widget(registrationForm.email) }}
+            {{ form_errors(registrationForm.email) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(registrationForm.plaintextPassword) }}
+            {{ form_widget(registrationForm.plaintextPassword) }}
+            {{ form_errors(registrationForm.plaintextPassword) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(registrationForm.roles) }}
+            {{ form_widget(registrationForm.roles) }}
+            {{ form_errors(registrationForm.roles) }}
+        </div>
 
-        <button class="btn">Register new user</button>
-    {{ form_end(registrationForm) }}
-    <a href="{{ url('admin_dashboard') }}"><button>Back</button></a>
+        <button class="btn btn-outline-success">Register new user</button>
+    {{ form_end(registrationForm) }}<br>
+    <a href="{{ url('admin_dashboard') }}"><button class="btn btn-outline-primary">Back to dashboard</button></a>
 {% endblock %}
