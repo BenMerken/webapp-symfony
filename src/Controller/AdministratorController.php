@@ -49,11 +49,13 @@ class AdministratorController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('admin_dashboard', ['created_user' => $user->getEmail()]);
+            return $this->redirectToRoute('admin_dashboard', [
+                'created_user' => $user->getEmail()
+            ]);
         }
 
         return $this->render('administrator/register_user.html.twig', [
-            'registrationForm' => $form->createView(),
+            'register_form' => $form->createView(),
         ]);
     }
 

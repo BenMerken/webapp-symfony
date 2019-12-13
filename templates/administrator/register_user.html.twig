@@ -5,24 +5,24 @@
 {% block content %}
     <h1 class="font-weight-light">Register new user</h1>
 
-    {{ form_start(registrationForm) }}
+    {{ form_start(register_form) }}
         <div class="form-group">
-            {{ form_label(registrationForm.email) }}
-            {{ form_widget(registrationForm.email) }}
-            {{ form_errors(registrationForm.email) }}
+            {{ form_label(register_form.email) }}
+            {{ form_widget(register_form.email) }}
+            {{ form_errors(register_form.email) }}
         </div>
         <div class="form-group">
-            {{ form_label(registrationForm.plaintextPassword, 'Password') }}
-            {{ form_widget(registrationForm.plaintextPassword) }}
-            {{ form_errors(registrationForm.plaintextPassword) }}
+            {{ form_label(register_form.plaintextPassword, 'Password') }}
+            {{ form_widget(register_form.plaintextPassword) }}
+            {{ form_errors(register_form.plaintextPassword) }}
         </div>
         <div class="form-group">
-            {{ form_label(registrationForm.roles) }}
-            {{ form_widget(registrationForm.roles) }}
-            {{ form_errors(registrationForm.roles) }}
+            {{ form_label(register_form.roles) }}
+            {{ form_widget(register_form.roles) }}
+            {{ form_errors(register_form.roles) }}
         </div>
 
         <button class="btn btn-outline-success">Register new user</button>
-    {{ form_end(registrationForm) }}<br>
+    {{ form_end(register_form) }}<br>
     <a href="{{ url('admin_dashboard') }}"><button class="btn btn-outline-primary">Back to dashboard</button></a>
 {% endblock %}

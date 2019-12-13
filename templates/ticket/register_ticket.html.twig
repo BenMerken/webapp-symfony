@@ -7,5 +7,15 @@
 {% block title %}Create new Ticket{% endblock %}
 
 {% block content %}
+    <h1 class="font-weight-light">Create ticket for {{ asset_name }}</h1>
+    {{ form_start(register_form) }}
 
+    <div class="form-group">
+        {{ form_label(register_form.description, 'Describe your complaint:') }}
+        {{ form_widget(register_form.description) }}
+        {{ form_errors(register_form.description) }}
+    </div>
+
+    <button class="btn btn-outline-success">Register Ticket</button>
+    {{ form_end(register_form) }}
 {% endblock %}
