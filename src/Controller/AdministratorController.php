@@ -28,7 +28,7 @@ class AdministratorController extends AbstractController
     }
 
     /**
-     * @Route("/admin/register", name="register")
+     * @Route("/admin/register_user", name="register_user")
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -52,7 +52,7 @@ class AdministratorController extends AbstractController
             return $this->redirectToRoute('admin_dashboard', ['created_user' => $user->getEmail()]);
         }
 
-        return $this->render('administrator/register.html.twig', [
+        return $this->render('administrator/register_user.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }
