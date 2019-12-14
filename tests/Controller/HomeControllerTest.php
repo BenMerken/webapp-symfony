@@ -26,7 +26,7 @@ class HomeControllerTest extends WebTestCase
         ];
     }
 
-    public function testIndex_noUserLoggedIn()
+    public function testIndex_AnonymousUser_Statuscode200AndH1()
     {
         $client = static::createClient();
         $client->request('GET', '/');
@@ -38,7 +38,7 @@ class HomeControllerTest extends WebTestCase
     /**
      * @dataProvider userAndPasswordProvider
      */
-    public function testIndex_UserLoggedIn($userAndPassword)
+    public function testIndex_UserLoggedIn_Statuscode200AndH1ContainsUserEmail($userAndPassword)
     {
         $client = static::createClient([], $userAndPassword);
         $client->request('GET', '/');
