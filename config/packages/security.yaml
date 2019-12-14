@@ -31,10 +31,3 @@ security:
         authenticators:
           - App\Security\LoginFormAuthenticator
 
-      # switch_user: true
-
-  access_control:
-   - { path: ^/admin, roles: ROLE_ADMIN }
-   - { path: ^/moderator, roles: ROLE_MOD }
-   - { path: ^/custodian, roles: ROLE_CUSTODIAN }
-   - { path: ^/profile, roles: ROLE_USER }
