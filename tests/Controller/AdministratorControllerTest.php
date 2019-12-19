@@ -63,10 +63,15 @@ class AdministratorControllerTest extends WebTestCase
         ];
     }
 
-    public function testIndex_AnonymousUser_Statuscode200()
+    public function testIndex_AnonymousUser_Statuscode302AndRedirectToLoginPage()
     {
         $client = static::createClient();
-        $client->request('GET', '/login');
+        $client->request('GET', '/admin');
+
+        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+
+        $client->followRedirect();
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
