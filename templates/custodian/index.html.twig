@@ -7,11 +7,16 @@
     <table class="table">
         <caption>Tickets</caption>
         <tr>
-            <th>Number Of Votes</th>
-            <th>Description</th>
+            <th scope="col">#</th>
+            <th scope="col">Number Of Votes</th>
+            <th scope="col">Description</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
         </tr>
+        {% set ticket_counter = 1 %}
         {% for ticket in tickets %}
-            <tr>
+            <tr scope="row">
+                <td>{{ ticket_counter }}</td>
                 <td>{{ ticket.numberOfVotes|e }}</td>
                 <td>{{ ticket.description|e }}</td>
                 <td>
@@ -25,6 +30,7 @@
                     </a>
                 </td>
             </tr>
+            {% set ticket_counter = ticket_counter + 1 %}
         {% endfor %}
     </table>
 {% endblock %}
