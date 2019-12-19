@@ -23,7 +23,13 @@ class UserRepositoryTest extends KernelTestCase
             ->getManager();
     }
 
-    public function testFindByUserRole_admins_getThreeAdminObjects()
+    public function tearDown()
+    {
+        $this->entityManager->close();
+        $this->entityManager = null;
+    }
+
+    public function testFindByUserRole_Admins_GetThreeAdminObjects()
     {
         $users = $this->entityManager
             ->getRepository(User::class)
@@ -33,11 +39,5 @@ class UserRepositoryTest extends KernelTestCase
         foreach ($users as $user) {
             $this->assertContains('ROLE_ADMIN', $user->getRoles());
         }
-    }
-
-    public function tearDown()
-    {
-        $this->entityManager->close();
-        $this->entityManager = null;
     }
 }

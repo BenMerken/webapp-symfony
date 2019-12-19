@@ -51,7 +51,7 @@ class SecurityControllerTest extends WebTestCase
     /**
      * @dataProvider registeredUserAndPasswordProvider
      */
-    public function testLogin_AnonymousUserLogsInWithForm_Statuscode200AndRedirectToHomePage($userAndPassword)
+    public function testLogin_AnonymousUserLogsInWithForm_Statuscode302AndRedirectToHomePage($userAndPassword)
     {
         $crawler = $this->client->request('GET', '/login');
         $loginForm = $crawler->filter('form')->form();
@@ -60,6 +60,10 @@ class SecurityControllerTest extends WebTestCase
         $loginForm['_password'] = $userAndPassword['password'];
 
         $this->client->submit($loginForm);
+
+        $this->assertTrue($this->client->getResponse()->isRedirect());
+        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+
         $this->client->followRedirect();
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
