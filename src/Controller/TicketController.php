@@ -26,6 +26,7 @@ class TicketController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('success', 'Ticket successfully created.');
             $ticket->setAsset($asset);
             $ticket->setDescription($form->get('description')->getData());
             $ticket->setCreationDate(new DateTimeImmutable());

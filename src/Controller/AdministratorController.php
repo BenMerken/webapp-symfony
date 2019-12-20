@@ -41,6 +41,7 @@ class AdministratorController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('success', 'User ' . $form->get('email')->getData() . ' created.');
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
@@ -73,6 +74,7 @@ class AdministratorController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($user);
             $entityManager->flush();
+            $this->addFlash('success', 'User '. $user->getEmail(). ' successfully deleted.');
         }
 
         return $this->redirectToRoute('admin_dashboard');

@@ -36,6 +36,7 @@ class CustodianController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($ticket);
             $entityManager->flush();
+            $this->addFlash('success', 'Ticket successfully deleted.');
         }
 
         return $this->redirectToRoute('custodian_dashboard');
@@ -52,6 +53,7 @@ class CustodianController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $ticket->setNumberOfVotes($ticket->getNumberOfVotes() + 1);
             $entityManager->flush();
+            $this->addFlash('success', 'Ticket successfully upvoted.');
         }
 
         return $this->redirectToRoute('custodian_dashboard');

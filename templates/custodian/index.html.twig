@@ -4,6 +4,11 @@
 
 {% block content %}
     <h1 class="font-weight-light">List of tickets</h1>
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
     <table class="table">
         <caption>Tickets</caption>
         <tr>

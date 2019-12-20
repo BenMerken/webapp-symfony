@@ -16,6 +16,11 @@
     {% endif %}
 
     {% set asset_counter = 1 %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
     <table class="table">
         <caption>Please, choose an asset to register a ticket for.</caption>
         <thead>
