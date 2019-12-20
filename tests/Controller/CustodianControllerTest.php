@@ -67,8 +67,10 @@ class CustodianControllerTest extends WebTestCase
     {
         $validTicketIds = [];
 
-        for ($i = 1; $i <= 5; $i++) {
-            $validTicketIds[] = [$i];
+        for ($i = 1; $i <= 17; $i++) {
+            if ($i % 2 !== 0) {
+                $validTicketIds[] = [$i];
+            }
         }
 
         return $validTicketIds;
@@ -117,7 +119,7 @@ class CustodianControllerTest extends WebTestCase
     /**
      * @dataProvider validTicketIdProvider
      */
-   /* public function testIndex_UpvoteButtonClicked_TicketUpvotedSuccessfully($ticketId)
+    public function testIndex_UpvoteButtonClicked_TicketUpvotedSuccessfully($ticketId)
     {
         $userAndPassword = ['PHP_AUTH_USER' => 'custodian1@pxl.be', 'PHP_AUTH_PW' => 'secret'];
         $client = static::createClient([], $userAndPassword);
@@ -131,7 +133,7 @@ class CustodianControllerTest extends WebTestCase
 
         $this->assertTrue($client->getResponse()->isOk());
         $this->assertEquals(intval($numberOfVotesBefore) + 1, intval($numberOfVotesAfter));
-    }*/
+    }
 
     /**
      * @dataProvider validTicketIdProvider
@@ -157,7 +159,7 @@ class CustodianControllerTest extends WebTestCase
     {
         $client = static::createClient([], $authorizedUserAndPassword);
 
-        for ($i = 1; $i <= 17; $i++) {
+        for ($i = 1; $i <= 5; $i++) {
             $client->request('GET', '/custodian/upvote/' . $i);
 
             $this->assertTrue($client->getResponse()->isRedirect());
@@ -194,7 +196,7 @@ class CustodianControllerTest extends WebTestCase
     {
         $client = static::createClient([], $authorizedUserAndPassword);
 
-        for ($i = 1; $i <= 17; $i++) {
+        for ($i = 1; $i <= 5; $i++) {
             $client->request('GET', '/custodian/delete/' . $i);
 
             $this->assertTrue($client->getResponse()->isRedirect());

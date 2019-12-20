@@ -79,4 +79,35 @@ class SecurityControllerTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isOk());
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
+
+    public function testLogout_AnonymousUser_Statuscode302AndRedirectToHomePage()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/logout');
+
+        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+
+        $client->followRedirect();
+
+        $this->assertTrue($client->getResponse()->isOk());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * @dataProvider registeredUserAndPasswordProvider
+    */
+    public function testLogout_AuthorizedUser_Statuscode302AndRedirectToHomePage($authorizedUserAndPassword)
+    {
+        $client = static::createClient([], $authorizedUserAndPassword);
+        $client->request('GET', '/logout');
+
+        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+
+        $client->followRedirect();
+
+        $this->assertTrue($client->getResponse()->isOk());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
 }

@@ -27,6 +27,4 @@ class TicketCreationFormType extends AbstractType
             'csrf_token_id' => 'authenticate',
         ]);
     }
-
-
 }
