@@ -34,17 +34,14 @@ class SecurityControllerTest extends WebTestCase
         ];
     }
 
-    protected function setUp(): void
-    {
-        $this->client = static::createClient();
-    }
-
     public function testLogin_AnonymousUser_Statuscode200()
     {
-        $crawler = $this->client->request('GET', '/login');
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/login');
         $h1 = $crawler->filter('h1')->text();
 
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals('Please, sign in.', $h1);
     }
 
@@ -53,19 +50,33 @@ class SecurityControllerTest extends WebTestCase
      */
     public function testLogin_AnonymousUserLogsInWithForm_Statuscode302AndRedirectToHomePage($userAndPassword)
     {
-        $crawler = $this->client->request('GET', '/login');
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/login');
         $loginForm = $crawler->filter('form')->form();
 
         $loginForm['_username'] = $userAndPassword['user'];
         $loginForm['_password'] = $userAndPassword['password'];
 
-        $this->client->submit($loginForm);
+        $client->submit($loginForm);
 
-        $this->assertTrue($this->client->getResponse()->isRedirect());
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
 
-        $this->client->followRedirect();
+        $client->followRedirect();
 
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * @dataProvider registeredUserAndPasswordProvider
+    */
+    public function testLogin_AuthorizedUser_Statuscode200($authorizedUserAndPassword)
+    {
+        $client = static::createClient([], $authorizedUserAndPassword);
+        $client->request('GET', '/login');
+
+
+        $this->assertTrue($client->getResponse()->isOk());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }
