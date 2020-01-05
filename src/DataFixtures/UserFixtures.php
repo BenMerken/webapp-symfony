@@ -32,7 +32,7 @@ class UserFixtures extends Fixture
             $user->setEmail("$name$i@pxl.be");
             $user->setPassword($this->passwordEncoder->encodePassword(
                 $user,
-                "secret"
+                "secret123"
             ));
             $userRoles = array($userRole);
             $user->setRoles($userRoles);
