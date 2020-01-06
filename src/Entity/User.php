@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Serializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -44,6 +46,16 @@ class User implements UserInterface, Serializable
      * @Assert\Length(min="8", max="4096")
      */
     private $plaintextPassword;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Complaint", mappedBy="user", orphanRemoval=true)
+     */
+    private $complaints;
+
+    public function __construct()
+    {
+        $this->complaints = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -147,5 +159,36 @@ class User implements UserInterface, Serializable
         list($this->id,
             $this->email,
             $this->password) = unserialize($serialized);
+    }
+
+    /**
+     * @return Collection|Complaint[]
+     */
+    public function getComplaints(): Collection
+    {
+        return $this->complaints;
+    }
+
+    public function addComplaint(Complaint $complaint): self
+    {
+        if (!$this->complaints->contains($complaint)) {
+            $this->complaints[] = $complaint;
+            $complaint->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComplaint(Complaint $complaint): self
+    {
+        if ($this->complaints->contains($complaint)) {
+            $this->complaints->removeElement($complaint);
+            // set the owning side to null (unless already changed)
+            if ($complaint->getUser() === $this) {
+                $complaint->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

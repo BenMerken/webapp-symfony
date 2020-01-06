@@ -28,7 +28,7 @@ class CustodianController extends AbstractController
     /**
      * @Route("/custodian/delete/{ticketId}", name="delete_ticket")
      */
-    public function deleteTicket(Request $request, $ticketId)
+    public function deleteTicket($ticketId)
     {
         $ticketRepository = $this->getDoctrine()->getRepository(Ticket::class);
         $ticket = $ticketRepository->find($ticketId);
@@ -45,7 +45,7 @@ class CustodianController extends AbstractController
     /**
      * @Route("/custodian/upvote/{ticketId}", name="upvote_ticket")
      */
-    public function upvoteTicket(Request $request, $ticketId)
+    public function upvoteTicket($ticketId)
     {
         $ticketRepository = $this->getDoctrine()->getRepository(Ticket::class);
         $ticket = $ticketRepository->find($ticketId);
