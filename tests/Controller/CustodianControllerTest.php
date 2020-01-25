@@ -15,19 +15,19 @@ class CustodianControllerTest extends WebTestCase
             [
                 [
                     'PHP_AUTH_USER' => 'custodian1@pxl.be',
-                    'PHP_AUTH_PW' => 'secret'
+                    'PHP_AUTH_PW' => 'secret123'
                 ]
             ],
             [
                 [
                     'PHP_AUTH_USER' => 'custodian2@pxl.be',
-                    'PHP_AUTH_PW' => 'secret'
+                    'PHP_AUTH_PW' => 'secret123'
                 ]
             ],
             [
                 [
                     'PHP_AUTH_USER' => 'custodian3@pxl.be',
-                    'PHP_AUTH_PW' => 'secret'
+                    'PHP_AUTH_PW' => 'secret123'
                 ]
             ],
         ];
@@ -39,25 +39,25 @@ class CustodianControllerTest extends WebTestCase
             [
                 [
                     'PHP_AUTH_USER' => 'mod1@pxl.be',
-                    'PHP_AUTH_PW' => 'secret'
+                    'PHP_AUTH_PW' => 'secret123'
                 ]
             ],
             [
                 [
                     'PHP_AUTH_USER' => 'mod2@pxl.be',
-                    'PHP_AUTH_PW' => 'secret'
+                    'PHP_AUTH_PW' => 'secret123'
                 ]
             ],
             [
                 [
                     'PHP_AUTH_USER' => 'admin1@pxl.be',
-                    'PHP_AUTH_PW' => 'secret'
+                    'PHP_AUTH_PW' => 'secret123'
                 ]
             ],
             [
                 [
                     'PHP_UNAUTH_USER' => 'admin2@pxl.be',
-                    'PHP_UNAUTH_PW' => 'secret'
+                    'PHP_UNAUTH_PW' => 'secret123'
                 ]
             ]
         ];
@@ -121,7 +121,7 @@ class CustodianControllerTest extends WebTestCase
      */
     public function testIndex_UpvoteButtonClicked_TicketUpvotedSuccessfully($ticketId)
     {
-        $userAndPassword = ['PHP_AUTH_USER' => 'custodian1@pxl.be', 'PHP_AUTH_PW' => 'secret'];
+        $userAndPassword = ['PHP_AUTH_USER' => 'custodian1@pxl.be', 'PHP_AUTH_PW' => 'secret123'];
         $client = static::createClient([], $userAndPassword);
         $crawler = $client->request('GET', '/custodian');
         $upvoteButton = $crawler->filter('table')->first()->filter('tr')->eq($ticketId)->filter('a')->last()->link();

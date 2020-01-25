@@ -15,19 +15,19 @@ class AdministratorControllerTest extends WebTestCase
             [
                 [
                     'PHP_AUTH_USER' => 'admin1@pxl.be',
-                    'PHP_AUTH_PW' => 'secret'
+                    'PHP_AUTH_PW' => 'secret123'
                 ]
             ],
             [
                 [
                     'PHP_AUTH_USER' => 'admin2@pxl.be',
-                    'PHP_AUTH_PW' => 'secret'
+                    'PHP_AUTH_PW' => 'secret123'
                 ]
             ],
             [
                 [
                     'PHP_AUTH_USER' => 'admin3@pxl.be',
-                    'PHP_AUTH_PW' => 'secret'
+                    'PHP_AUTH_PW' => 'secret123'
                 ]
             ],
         ];
@@ -39,25 +39,25 @@ class AdministratorControllerTest extends WebTestCase
             [
                 [
                     'PHP_AUTH_USER' => 'mod1@pxl.be',
-                    'PHP_AUTH_PW' => 'secret'
+                    'PHP_AUTH_PW' => 'secret123'
                 ]
             ],
             [
                 [
                     'PHP_AUTH_USER' => 'mod2@pxl.be',
-                    'PHP_AUTH_PW' => 'secret'
+                    'PHP_AUTH_PW' => 'secret123'
                 ]
             ],
             [
                 [
                     'PHP_AUTH_USER' => 'custodian1@pxl.be',
-                    'PHP_AUTH_PW' => 'secret'
+                    'PHP_AUTH_PW' => 'secret123'
                 ]
             ],
             [
                 [
                     'PHP_UNAUTH_USER' => 'custodian2@pxl.be',
-                    'PHP_UNAUTH_PW' => 'secret'
+                    'PHP_UNAUTH_PW' => 'secret123'
                 ]
             ]
         ];

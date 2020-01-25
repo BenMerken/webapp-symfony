@@ -15,19 +15,19 @@ class ModeratorControllerTest extends WebTestCase
             [
                 [
                     'PHP_AUTH_USER' => 'mod1@pxl.be',
-                    'PHP_AUTH_PW' => 'secret'
+                    'PHP_AUTH_PW' => 'secret123'
                 ]
             ],
             [
                 [
                     'PHP_AUTH_USER' => 'mod2@pxl.be',
-                    'PHP_AUTH_PW' => 'secret'
+                    'PHP_AUTH_PW' => 'secret123'
                 ]
             ],
             [
                 [
                     'PHP_AUTH_USER' => 'mod2@pxl.be',
-                    'PHP_AUTH_PW' => 'secret'
+                    'PHP_AUTH_PW' => 'secret123'
                 ]
             ],
         ];
@@ -39,13 +39,13 @@ class ModeratorControllerTest extends WebTestCase
             [
                 [
                     'PHP_AUTH_USER' => 'admin1@pxl.be',
-                    'PHP_AUTH_PW' => 'secret'
+                    'PHP_AUTH_PW' => 'secret123'
                 ]
             ],
             [
                 [
                     'PHP_AUTH_USER' => 'custodian2@pxl.be',
-                    'PHP_AUTH_PW' => 'secret'
+                    'PHP_AUTH_PW' => 'secret123'
                 ]
             ],
         ];

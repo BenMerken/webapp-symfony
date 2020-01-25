@@ -16,19 +16,19 @@ class SecurityControllerTest extends WebTestCase
             [
                 [
                     'user' => 'admin1@pxl.be',
-                    'password' => 'secret',
+                    'password' => 'secret123',
                 ]
             ],
             [
                 [
                     'user' => 'mod1@pxl.be',
-                    'password' => 'secret',
+                    'password' => 'secret123',
                 ]
             ],
             [
                 [
                     'user' => 'custodian1@pxl.be',
-                    'password' => 'secret',
+                    'password' => 'secret123',
                 ]
             ],
         ];
