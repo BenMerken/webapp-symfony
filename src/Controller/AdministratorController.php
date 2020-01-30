@@ -99,5 +99,7 @@ class AdministratorController extends AbstractController
             $this->addFlash('success',
                 'Complaint against user ' . $complaint->getUser()->getEmail() . ' successfully deleted.');
         }
+
+        return $this->redirectToRoute('admin_dashboard');
     }
 }

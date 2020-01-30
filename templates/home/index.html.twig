@@ -47,5 +47,12 @@
         {% endfor %}
         </tbody>
     </table>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <div>
+            <a href="{{ url('generate_pdf', {'route': path(app.request.attributes.get('_route'))}) }}">
+                <button class="btn btn-outline-primary">Generate PDF</button>
+            </a>
+        </div>
+    {% endif %}
 {% endblock %}
 

@@ -24,7 +24,14 @@
             {{ message }}
         </div>
     {% endfor %}
-    <a href="{{ url('register_complaint') }}">
-        <button class="btn btn-outline-primary">Register new complaint</button>
-    </a>
+    <div>
+        <a href="{{ url('register_complaint') }}">
+            <button class="btn btn-outline-primary">Register new complaint</button>
+        </a>
+    </div><br>
+    <div>
+        <a href="{{ url('generate_pdf', {'route': path(app.request.attributes.get('_route'))}) }}">
+            <button class="btn btn-outline-primary">Generate PDF</button>
+        </a>
+    </div>
 {% endblock %}

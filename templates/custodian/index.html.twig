@@ -54,4 +54,9 @@
             {% set ticket_counter = ticket_counter + 1 %}
         {% endfor %}
     </table>
+    <div>
+        <a href="{{ url('generate_pdf', {'route': path(app.request.attributes.get('_route'))}) }}">
+            <button class="btn btn-outline-primary">Generate PDF</button>
+        </a>
+    </div>
 {% endblock %}
