@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Complaint;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Service\ComplaintService;
@@ -24,13 +25,15 @@ class AdministratorController extends AbstractController
         $userRepository = $this->getDoctrine()->getRepository(User::class);
         $moderators = $userRepository->findByUserRole('ROLE_MOD');
         $custodians = $userRepository->findByUserRole('ROLE_CUSTODIAN');
-        $complaints = $complaintService->getComplaintsForUserEmail($this->get('security.token_storage')->getToken()->getUser()->getEmail());
+        $personalComplaints = $complaintService->getComplaintsForUserEmail($this->get('security.token_storage')->getToken()->getUser()->getEmail());
+        $allComplaints = $this->getDoctrine()->getRepository(Complaint::class)->findAll();
 
         return $this->render('administrator/index.html.twig', [
             'moderators' => $moderators,
             'custodians' => $custodians,
             'created_user' => $request->query->get('created_user'),
-            'complaints' => $complaints
+            'personal_complaints' => $personalComplaints,
+            'all_complaints' => $allComplaints
         ]);
     }
 
@@ -68,7 +71,7 @@ class AdministratorController extends AbstractController
     }
 
     /**
-     * @Route("/admin/delete/{userId}", name="delete_user")
+     * @Route("/admin/delete/user/{userId}", name="delete_user")
      */
     public function deleteUser($userId)
     {
@@ -81,5 +84,20 @@ class AdministratorController extends AbstractController
         }
 
         return $this->redirectToRoute('admin_dashboard');
+    }
+
+    /**
+     * @Route("/admin/delete/complaint/{complaintId}", name="delete_complaint")
+     */
+    public function deleteComplaint($complaintId)
+    {
+        $complaint = $this->getDoctrine()->getRepository(Complaint::class)->find($complaintId);
+        if ($complaint) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($complaint);
+            $entityManager->flush();
+            $this->addFlash('success',
+                'Complaint against user ' . $complaint->getUser()->getEmail() . ' successfully deleted.');
+        }
     }
 }

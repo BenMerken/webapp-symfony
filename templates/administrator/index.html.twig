@@ -4,14 +4,19 @@
 
 {% block content %}
     <h1 class="font-weight-light">Administrator dashboard</h1>
-    {% if complaints|length > 0 %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% if personal_complaints|length > 0 %}
         <div class="alert alert-danger">
             <p>
-                There {{ complaints|length > 1 ? 'are': 'is' }} {{ complaints|length }}
-                {{ complaints|length > 1 ? 'complaints' : 'complaint' }} against you:
+                There {{ personal_complaints|length > 1 ? 'are': 'is' }} {{ personal_complaints|length }}
+                {{ personal_complaints|length > 1 ? 'complaints' : 'complaint' }} against you:
             </p>
             {% set counter = 1 %}
-            {% for complaint in complaints %}
+            {% for complaint in personal_complaints %}
                 <div>
                     {{ counter }}. {{ complaint.reason }}
                 </div><br>
@@ -20,12 +25,44 @@
         </div>
     {% endif %}
 
-    <h1 class="font-weight-light">List of Users</h1>
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-success">
-            {{ message }}
-        </div>
-    {% endfor %}
+
+    <h2 class="font-weight-light">List of Users</h2>
+
+    {% if all_complaints|length > 0 %}
+        <table class="table">
+            <caption>Users with complaints</caption>
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">User email</th>
+                <th scope="col">Reason for complaint</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% set counter = 1 %}
+            {% for complaint in all_complaints %}
+                <tr>
+                    <th scope="row">{{ counter }}.</th>
+                    <td>{{ complaint.user.email }}</td>
+                    <td>{{ complaint.reason }}</td>
+                    <td>
+                        <a href="{{ url('delete_complaint', {'complaintId': complaint.id}) }}">
+                            <button class="btn btn-outline-danger">Delete complaint</button>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ url('delete_user', {'userId': complaint.user.id}) }}">
+                            <button class="btn btn-outline-danger">Delete user</button>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {%  endif %}
+
     <table class="table">
         <caption>Moderators</caption>
         <thead>
