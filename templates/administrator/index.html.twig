@@ -26,9 +26,9 @@
     {% endif %}
 
 
-    <h2 class="font-weight-light">List of Users</h2>
 
     {% if all_complaints|length > 0 %}
+        <h2 class="font-weight-light">List of users with complaints</h2>
         <table class="table">
             <caption>Users with complaints</caption>
             <thead>
@@ -63,6 +63,7 @@
         </table>
     {%  endif %}
 
+    <h2 class="font-weight-light">List of Users</h2>
     <table class="table">
         <caption>Moderators</caption>
         <thead>
