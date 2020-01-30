@@ -6,7 +6,6 @@ use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Knp\Snappy\Pdf;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,7 +19,7 @@ class SnappyController extends AbstractController
      */
     public function generatePDF(Request $request, Pdf $snappy)
     {
-        $url = 'https://localhost'. $request->get('route');
+        $url = 'https://localhost' . $request->get('route');
         $filename = $this->get('security.token_storage')->getToken()->getUser()->getEmail() . '.pdf';
 
         return new PdfResponse(

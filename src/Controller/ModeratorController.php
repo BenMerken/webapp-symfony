@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Asset;
 use App\Entity\Complaint;
+use App\Entity\Room;
+use App\Form\AssetCreationFormType;
 use App\Form\ComplaintRegistrationFormType;
 use App\Service\ComplaintService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -22,10 +25,12 @@ class ModeratorController extends AbstractController
     {
         $complaints = $complaintService
             ->getComplaintsForUserEmail($this->get('security.token_storage')->getToken()->getUser()->getEmail());
+        $rooms = $this->getDoctrine()->getRepository(Room::class)->findAll();
 
         return $this->render('moderator/index.html.twig', [
             'controller_name' => 'ModeratorController',
-            'complaints' => $complaints
+            'complaints' => $complaints,
+            'rooms' => $rooms
         ]);
     }
 
@@ -61,5 +66,52 @@ class ModeratorController extends AbstractController
         return $this->render('moderator/register_complaint.html.twig', [
             'register_form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("moderator/create/{roomId}", name="create_asset")
+     */
+    public function createAsset(Request $request, $roomId)
+    {
+        $asset = new Asset();
+        $room = $this->getDoctrine()->getRepository(Room::class)->findOneBy(['id' => $roomId]);
+        $form = $this->createForm(AssetCreationFormType::class, $asset);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $asset->setRoom($room);
+            $asset->setName($form->get('name')->getData());
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($asset);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Asset ' . $form->get('name')->getData() . ' for room ' . $room->getName() . ' created.');
+
+            return $this->redirectToRoute('moderator_dashboard', []);
+        }
+
+        return $this->render('moderator/create_asset.html.twig', [
+            'asset_form' => $form->createView(),
+            'room_name' => $room->getName()
+        ]);
+    }
+
+
+    /**
+     * @Route("moderator/delete/{assetId}", name="delete_asset")
+     */
+    public function deleteAsset($assetId)
+    {
+        $assetRepository = $this->getDoctrine()->getRepository(Asset::class);
+        $asset = $assetRepository->find($assetId);
+        if ($asset) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($asset);
+            $entityManager->flush();
+            $this->addFlash('success', 'Asset ' . $asset->getName() . ' successfully deleted.');
+        }
+
+        return $this->redirectToRoute('moderator_dashboard');
     }
 }

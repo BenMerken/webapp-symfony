@@ -24,6 +24,62 @@
             {{ message }}
         </div>
     {% endfor %}
+    {% if rooms|length > 0 %}
+        <h2 class="font-weight-light">Rooms</h2>
+        <table class="table">
+            <caption>Rooms</caption>
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Room</th>
+                <th scope="col">Assets</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% set counter = 1 %}
+            {% for room in rooms %}
+                <tr>
+                    <th scope="row">{{ counter }}.</th>
+                    <td>{{ room.name }}</td>
+                    <td>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% set asset_counter = 1 %}
+                            {% for asset in room.assets %}
+                                <tr>
+                                    <th scope="row">{{ asset_counter }}.</th>
+                                    <td>{{ asset.name }}</td>
+                                    <td>
+                                        <a href="{{ url('delete_asset', {'assetId': asset.id}) }}">
+                                            <button class="btn btn-outline-danger">Delete asset</button>
+                                        </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% set asset_counter = asset_counter + 1 %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        <a href="{{ url('create_asset', {'roomId': room.id}) }}">
+                            <button class="btn btn-outline-success">Create asset</button>
+                        </a>
+                    </td>
+                </tr>
+                {% set counter = counter + 1 %}
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
     <div>
         <a href="{{ url('register_complaint') }}">
             <button class="btn btn-outline-primary">Register new complaint</button>

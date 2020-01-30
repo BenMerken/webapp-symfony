@@ -5,6 +5,8 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Entity()
@@ -19,7 +21,7 @@ class Asset
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Room")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Room", inversedBy="assets")
      * @ORM\JoinColumn(nullable=false)
      */
     private $room;
@@ -30,7 +32,7 @@ class Asset
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Ticket", mappedBy="asset")
+     * @ORM\OneToMany(targetEntity="App\Entity\Ticket", mappedBy="asset", orphanRemoval=true)
      */
     private $tickets;
 
@@ -97,5 +99,28 @@ class Asset
         }
 
         return $this;
+    }
+
+    /**
+     * @Assert\Callback()
+     */
+    public function validateName(ExecutionContextInterface $context)
+    {
+        if (!is_string($this->name)) {
+            $context->buildViolation('The name for your asset must be a string.')
+                ->atPath('name')->addViolation();
+        }
+
+        if (!(strlen($this->name) >= 6 && strlen($this->name) <= 45)) {
+            $context->buildViolation('The name for your asset should be between 6 and 45
+            characters long.')
+                ->atPath('name')->addViolation();
+        }
+
+        if (!preg_match('/^[A-Za-z][A-Za-z0-9 ]+$/', $this->name)) {
+            $context->buildViolation('The name for your asset should start with a letter (may be capitalized)
+             and should only contain standard Latin alphabet and numbers.')
+                ->atPath('name')->addViolation();
+        }
     }
 }

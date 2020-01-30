@@ -1,0 +1,21 @@
+{% extends'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block title %}Register complaint{% endblock %}
+
+{% block content %}
+    <h1 class="font-weight-light">Create Asset for {{ room_name }}</h1>
+    {{ form_start(asset_form) }}
+
+    <div class="form-group">
+        {{ form_label(asset_form.name, 'Name for the new asset:') }}
+        {{ form_widget(asset_form.name) }}
+    </div>
+
+    <button class="btn btn-outline-success">Create asset</button>
+    {{ form_end(asset_form) }}<br>
+    <a href="{{ url('moderator_dashboard') }}" class="btn btn-outline-primary">Back to dashboard</a>
+{% endblock %}

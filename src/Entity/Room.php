@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,6 +27,16 @@ class Room
      * @ORM\Column(type="integer", options={"default": 0})
      */
     private $happinessScore;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Asset", mappedBy="room")
+     */
+    private $assets;
+
+    public function __construct()
+    {
+        $this->assets = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -51,6 +63,37 @@ class Room
     public function setHappinessScore(int $happinessScore): self
     {
         $this->happinessScore = $happinessScore;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Asset[]
+     */
+    public function getAssets(): Collection
+    {
+        return $this->assets;
+    }
+
+    public function addAsset(Asset $asset): self
+    {
+        if (!$this->assets->contains($asset)) {
+            $this->assets[] = $asset;
+            $asset->setRoom($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAsset(Asset $asset): self
+    {
+        if ($this->assets->contains($asset)) {
+            $this->assets->removeElement($asset);
+            // set the owning side to null (unless already changed)
+            if ($asset->getRoom() === $this) {
+                $asset->setRoom(null);
+            }
+        }
 
         return $this;
     }
