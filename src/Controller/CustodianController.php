@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Ticket;
+use App\Service\ComplaintService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,12 +17,15 @@ class CustodianController extends AbstractController
     /**
      * @Route("/custodian", name="custodian_dashboard")
      */
-    public function index()
+    public function index(ComplaintService $complaintService)
     {
         $tickets = $this->getDoctrine()->getRepository(Ticket::class)->findAllDescendingByNumberOfVotes();
+        $complaints = $complaintService
+            ->getComplaintsForUserEmail($this->get('security.token_storage')->getToken()->getUser()->getEmail());
 
         return $this->render('custodian/index.html.twig', [
-            'tickets' => $tickets
+            'tickets' => $tickets,
+            'complaints' => $complaints
         ]);
     }
 

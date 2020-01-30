@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Service\ComplaintService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,16 +19,18 @@ class AdministratorController extends AbstractController
     /**
      * @Route("/admin", name="admin_dashboard")
      */
-    public function index(Request $request)
+    public function index(Request $request, ComplaintService $complaintService)
     {
         $userRepository = $this->getDoctrine()->getRepository(User::class);
         $moderators = $userRepository->findByUserRole('ROLE_MOD');
         $custodians = $userRepository->findByUserRole('ROLE_CUSTODIAN');
+        $complaints = $complaintService->getComplaintsForUserEmail($this->get('security.token_storage')->getToken()->getUser()->getEmail());
 
         return $this->render('administrator/index.html.twig', [
             'moderators' => $moderators,
             'custodians' => $custodians,
             'created_user' => $request->query->get('created_user'),
+            'complaints' => $complaints
         ]);
     }
 
@@ -74,7 +77,7 @@ class AdministratorController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($user);
             $entityManager->flush();
-            $this->addFlash('success', 'User '. $user->getEmail(). ' successfully deleted.');
+            $this->addFlash('success', 'User ' . $user->getEmail() . ' successfully deleted.');
         }
 
         return $this->redirectToRoute('admin_dashboard');

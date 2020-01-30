@@ -4,6 +4,21 @@
 
 {% block content %}
     <h1 class="font-weight-light">Moderator dashboard</h1>
+    {% if complaints|length > 0 %}
+        <div class="alert alert-danger">
+            <p>
+                There {{ complaints|length > 1 ? 'are': 'is' }} {{ complaints|length }}
+                {{ complaints|length > 1 ? 'complaints' : 'complaint' }} against you:
+            </p>
+            {% set counter = 1 %}
+            {% for complaint in complaints %}
+                <div>
+                    {{ counter }}. {{ complaint.reason }}
+                </div><br>
+                {% set counter = counter + 1 %}
+            {% endfor %}
+        </div>
+    {% endif %}
     {% for message in app.flashes('success') %}
         <div class="alert alert-success">
             {{ message }}

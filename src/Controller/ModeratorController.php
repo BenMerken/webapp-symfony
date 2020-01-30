@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Complaint;
 use App\Form\ComplaintRegistrationFormType;
+use App\Service\ComplaintService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,10 +18,14 @@ class ModeratorController extends AbstractController
     /**
      * @Route("/moderator", name="moderator_dashboard")
      */
-    public function index()
+    public function index(ComplaintService $complaintService)
     {
+        $complaints = $complaintService
+            ->getComplaintsForUserEmail($this->get('security.token_storage')->getToken()->getUser()->getEmail());
+
         return $this->render('moderator/index.html.twig', [
             'controller_name' => 'ModeratorController',
+            'complaints' => $complaints
         ]);
     }
 

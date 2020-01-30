@@ -3,14 +3,31 @@
 {% block title %}Administrator Dashboard{% endblock %}
 
 {% block content %}
+    <h1 class="font-weight-light">Administrator dashboard</h1>
+    {% if complaints|length > 0 %}
+        <div class="alert alert-danger">
+            <p>
+                There {{ complaints|length > 1 ? 'are': 'is' }} {{ complaints|length }}
+                {{ complaints|length > 1 ? 'complaints' : 'complaint' }} against you:
+            </p>
+            {% set counter = 1 %}
+            {% for complaint in complaints %}
+                <div>
+                    {{ counter }}. {{ complaint.reason }}
+                </div><br>
+                {% set counter = counter + 1 %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <h1 class="font-weight-light">List of Users</h1>
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
     <table class="table">
         <caption>Moderators</caption>
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-success">
-                {{ message }}
-            </div>
-        {% endfor %}
         <thead>
         <tr>
             <th scope="col">#</th>
