@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Complaint;
-use App\Entity\User;
 use App\Form\ComplaintRegistrationFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,16 +29,13 @@ class ModeratorController extends AbstractController
      */
     public function registerComplaint(Request $request)
     {
-        $userId = $request->get('userId');
-        $user = $this->getDoctrine()
-            ->getRepository(User::class)
-            ->findOneBy(['id' => $userId]);
-
         $complaint = new Complaint();
         $form = $this->createForm(ComplaintRegistrationFormType::class, $complaint);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user = $form->get('user')->getData();
+
             $complaint->setUser($user);
             $complaint->setReason($form->get('reason')->getData());
 
@@ -49,14 +45,15 @@ class ModeratorController extends AbstractController
             $entitiyManager->persist($complaint);
             $entitiyManager->flush();
 
-            $this->addFlash('success', 'Your complaint for user ' . $user->getEmail() . ' was successfully registered.');
+            $message = 'Your complaint for user ' . $user->getEmail() . ' was successfully registered.';
+            $this->addFlash('success', $message);
 
             return $this->redirectToRoute('moderator_dashboard', [
                 'created_complaint' => $complaint,
             ]);
         }
 
-        return $this->render('moderator/register_complaint.html.twig',[
+        return $this->render('moderator/register_complaint.html.twig', [
             'register_form' => $form->createView(),
         ]);
     }

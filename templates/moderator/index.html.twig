@@ -4,6 +4,11 @@
 
 {% block content %}
     <h1 class="font-weight-light">Moderator dashboard</h1>
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
     <a href="{{ url('register_complaint') }}">
         <button class="btn btn-outline-primary">Register new complaint</button>
     </a>
