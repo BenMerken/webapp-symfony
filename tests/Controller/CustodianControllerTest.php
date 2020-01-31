@@ -225,4 +225,22 @@ class CustodianControllerTest extends WebTestCase
             $this->assertEquals(403, $client->getResponse()->getStatusCode());
         }
     }
+
+    // Newly created tests
+
+    public function testIndex_Custodian2LoggedInAndComplaintAgainst_DashboardContainsComplaintWarningElement()
+    {
+        $client = static::createClient([],
+            [
+                'PHP_AUTH_USER' => 'custodian2@pxl.be',
+                'PHP_AUTH_PW' => 'secret123'
+            ])
+        ;
+        $crawler = $client->request('GET', '/custodian');
+        $complaintElement = $crawler->filter('div:contains("complaint")');
+
+        $this->assertTrue($client->getResponse()->isOk());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertContains('There is 1 complaint against you:',$complaintElement->text());
+    }
 }

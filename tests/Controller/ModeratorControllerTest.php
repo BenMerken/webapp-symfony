@@ -67,7 +67,7 @@ class ModeratorControllerTest extends WebTestCase
 
     /**
      * @dataProvider authorizedUserAndPasswordProvider
-    */
+     */
     public function testIndex_AuthorizedUser_Statuscode200($authorizedUserAndPassword)
     {
         $client = static::createClient([], $authorizedUserAndPassword);
@@ -89,5 +89,38 @@ class ModeratorControllerTest extends WebTestCase
 
         $this->assertTrue($client->getResponse()->isForbidden());
         $this->assertEquals(403, $client->getResponse()->getStatusCode());
+    }
+
+    // Newly added tests
+
+    public function testDeleteAsset_AnonymousUser_Statuscode302AndRedirectToLoginPage()
+    {
+        $client = static::createClient();
+        $client->request('GET', 'moderator/delete/1');
+
+        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+
+        $client->followRedirect();
+
+        $this->assertTrue($client->getResponse()->isOk());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(1,preg_match('/\/login$/', $client->getRequest()->getUri()));
+
+    }
+
+    public function testCreateAsset_AnonymousUser_Statuscode302AndRedirectToLoginPage()
+    {
+        $client = static::createClient();
+        $client->request('GET', 'moderator/create/1');
+
+        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+
+        $client->followRedirect();
+
+        $this->assertTrue($client->getResponse()->isOk());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(1,preg_match('/\/login$/', $client->getRequest()->getUri()));
     }
 }

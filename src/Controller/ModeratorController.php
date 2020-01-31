@@ -97,7 +97,6 @@ class ModeratorController extends AbstractController
         ]);
     }
 
-
     /**
      * @Route("moderator/delete/{assetId}", name="delete_asset")
      */

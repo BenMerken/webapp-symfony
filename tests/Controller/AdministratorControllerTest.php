@@ -99,4 +99,52 @@ class AdministratorControllerTest extends WebTestCase
 
         $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
+
+
+    // Newly added tests
+
+    public function testDeleteComplaint_AnonymousUser_Statuscode302AndRedirectToLoginPage()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/admin/delete/complaint/8');
+
+        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+
+        $client->followRedirect();
+
+        $this->assertTrue($client->getResponse()->isOk());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(1, preg_match('/\/login$/', $client->getRequest()->getUri()));
+    }
+
+    /**
+     * @dataProvider authorizedUserAndPasswordProvider
+     */
+    public function testDeleteComplaint_AuthorizedUserLoggedIn_Statuscode302AndRedirectToDashboard($authorizedUserAndPassword)
+    {
+        $client = static::createClient([], $authorizedUserAndPassword);
+        $client->request('GET', '/admin/delete/complaint/8');
+
+        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+
+        $client->followRedirect();
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(1,preg_match('/\/admin$/', $client->getRequest()->getUri()));
+    }
+
+    /**
+     * @dataProvider unauthorizedUserAndPasswordProvider
+     */
+    public function testDeleteComplaint_UnauthorizedUserLoggedIn_Statuscode403($unauthorizedUserAndPassword)
+    {
+        $client = static::createClient([], $unauthorizedUserAndPassword);
+        $client->catchExceptions(false);
+        $this->expectException(AccessDeniedException::class);
+        $client->request('GET', '/admin/delete/complaint/8');
+
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
+    }
 }

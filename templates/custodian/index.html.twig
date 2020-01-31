@@ -7,8 +7,7 @@
     {% if complaints|length > 0 %}
         <div class="alert alert-danger">
             <p>
-                There {{ complaints|length > 1 ? 'are': 'is' }} {{ complaints|length }}
-                {{ complaints|length > 1 ? 'complaints' : 'complaint' }} against you:
+                There {{ complaints|length > 1 ? 'are': 'is' }} {{ complaints|length }} {{ complaints|length > 1 ? 'complaints' : 'complaint' }} against you:
             </p>
             {% set counter = 1 %}
             {% for complaint in complaints %}
